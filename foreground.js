@@ -126,15 +126,10 @@ if (!document.all) document.captureEvents(Event.MOUSEUP);
 
 
 
-exit.addEventListener('click', () => {
-  document.querySelector('body').removeChild(container);
-})
-
-
 //listener events for keydown functionality
 document.addEventListener('keydown', function (event) {
   // CTRL + S combo to START
-  if (event.ctrlKey && event.key === 's' && enabledExt) {
+  if (event.ctrlKey && event.key === 's') {
     document.querySelector('body').appendChild(container);
   }
   // CTRL + E combo to EXIT
@@ -143,4 +138,7 @@ document.addEventListener('keydown', function (event) {
   }
 });
 
+exit.addEventListener('click', () => {
+  document.querySelector('body').removeChild(container);
+})
 

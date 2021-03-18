@@ -29,8 +29,8 @@ chrome.tabs.onActivated.addListener(tab => {
   })
 });
 
-function pocketSat() {
-  if(isExtensionOn){
+function pocketSat(tab) {
+  if(isExtensionOn && tab === current_tab_id){
   chrome.tabs.insertCSS(null, {file: './styles.css'})
   chrome.tabs.executeScript(null, {file: './foreground.js'}, ()=> console.log('foreground injected'))
   }

@@ -1,89 +1,64 @@
+
 #first {
-  /* position: absolute;
-  top: 20%;
-  left: 23%; */
-  height: 40px;
-  width: auto;
-  background-color: #f2a900;
-  border: none;
-  border-radius: 2px;
+  height: 2.6rem;
+  width: 9.4rem;
+  border: 1px solid #f2a900;
+  background-color: transparent;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 10px 20px;
+  font-weight: 300;
+  color: #f2a900;
   outline: none;
-  text-decoration: none;
 }
-
-#first {
-    letter-spacing: 0;
-    box-sizing: inherit;
-    transition-property: all;
-    transition-duration: .5s;
-    transition-timing-function: ease;
+#first:hover {
+  border: 0;
+  -webkit-box-shadow: 5px 5px 44px 3px #f2a900;
+  -moz-box-shadow: 5px 5px 44px 3px #f2a900;
+  box-shadow: 5px 5px 44px 3px #f2a900;
 }
-
-#first:hover,
-#first:active {
-  letter-spacing: 1px;
+#first:focus{
+  outline: none;
 }
-
-#first:after,
-#first:before {
-  backface-visibility: hidden;
-  border: 1px solid rgba(#fff, 0);
-  bottom: 0px;
-  content: " ";
-  display: block;
-  margin: 0 auto;
-  position: relative;
-  transition: all 280ms ease-in-out;
-  width: 0;
-}
-
-#first:hover:after,
-#first:hover:before {
-  backface-visibility: hidden;
-  border-color: #fff;
-  transition: width 350ms ease-in-out;
-  width: 70%;
-}
-
-#first:hover:before {
-  bottom: auto;
-  top: 0;
-  width: 70%;
-}
-
 #input{
   /* position: absolute;
   top: 20%;
   left: 30%; */
-  height: 40px;
-  width: auto;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  border: none;
+  height: 2.6rem;
+  width: 9.2rem;
+  font-family: sans-serif;
+  border-radius: Helvetica;
+  background-color: rgb(23, 23, 23);
+  color: white;
 }
 
 #input:focus {
   outline:none !important;
 }
 #header{
-  font-size: 15px;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  align-self: center;
+  font-size: 1.3rem;
+  font-family:Verdana;
   letter-spacing: 2px;
+  color: #f2a900;
 }
 
 #container {
-  z-index: 10;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-content: center;
   position: fixed;
-  top: 20%;
-  left: 60%;
+  top: 10vh;
+  left: 60vw;
   background-color: white;
-  border: 1px solid #4d4d4e;
+  border: 1px solid #323232;
   border-radius: 4px;
   color: white;
   height: 14vh;
-  width: 22rem;
+  width: 24vw;
   background-color: #4d4d4e;
   font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -97,6 +72,7 @@
 }
 
 #divBox1 {
+  background-color: rgb(17, 17, 17) !important;
   width: 100%;
   position: absolute;
   top: 0;
@@ -113,10 +89,10 @@
   position: absolute;
   right: 0;
   background-color: #f2a900;
-  border-radius: 2px;
+  border-radius: 4px;
   color: black;
-  height: 20px;
-  width: 20px;
+  height: 2vh;
+  width: 2vw;
   font-size: larger;
   display: flex;
   justify-content: center;
