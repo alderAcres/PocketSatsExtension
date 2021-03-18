@@ -2,7 +2,7 @@ let displayValue;
 
 const satPriceBtn = document.createElement('button')
 satPriceBtn.innerText = 'PRICE IN SATS'
-satPriceBtn.id = "first"
+satPriceBtn.id = "first";
 
 const input = document.createElement('input')
 input.type = "text";
@@ -10,7 +10,6 @@ input.id = 'input';
 
 const header = document.createElement('p')
 header.innerText = 'PocketSats';
-header.style.float = top;
 header.id = 'header'
 
 const container = document.createElement('div')
@@ -41,8 +40,7 @@ divBox1.appendChild(exit);
 //send input to backend
 //have backend fetch sat price adn convert to usd
 //send back in repsonse
-satPriceBtn.addEventListener('click', () => {
-
+document.getElementById('first').addEventListener('click', () => {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "http://localhost:3000/api/data", true);
   xhr.setRequestHeader("Content-Type", "application/json");;
@@ -50,7 +48,7 @@ satPriceBtn.addEventListener('click', () => {
     if (xhr.readyState == 4) {
     // JSON.parse does not evaluate the attacker's scripts.
     resp = JSON.parse(xhr.responseText);
-
+    console.log('getting data from button', resp)
     let satToBitcoin = Number(resp.currentPrice)
     const valInput = document.getElementById('input').value;
     const calc = valInput/ (satToBitcoin / 100000000)
@@ -60,7 +58,7 @@ satPriceBtn.addEventListener('click', () => {
    //take price of input --> divide by price of bitcoin/100,000,000 
   }
 }
-    xhr.send();
+    xhr.send(null);
 })
 
 
@@ -131,10 +129,12 @@ document.addEventListener('keydown', function (event) {
   // CTRL + S combo to START
   if (event.ctrlKey && event.key === 's') {
     document.querySelector('body').appendChild(container);
+    chrome.extension.sendMessage({ message: "turnOnExt"});
   }
   // CTRL + E combo to EXIT
   if (event.ctrlKey && event.key === 'e') {
     document.querySelector('body').removeChild(container);
+    chrome.extension.sendMessage({ message: "turnOffExt"});
   }
 });
 
@@ -142,3 +142,7 @@ exit.addEventListener('click', () => {
   document.querySelector('body').removeChild(container);
 })
 
+
+exit.onclick = () => {
+  chrome.extension.sendMessage({ message: "turnOffExt"});
+};
