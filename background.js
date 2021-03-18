@@ -43,18 +43,10 @@ let isExtensionOn = false;
 
 chrome.extension.onMessage.addListener(
 function (request, sender, sendResponse) {
-  console.log(request.message)
-    if (request.message == "turnOffExt") {
-        isExtensionOn = false;
-        chrome.tabs.insertCSS(null, {file: './stylesOff.css'}, () => {
-         console.log('styles OFF')
-        })
-    }
-    else if (request.message == "turnOnExt") {
+  if (request.message == "turnOnExt") {
       isExtensionOn = true;
-  
       chrome.tabs.insertCSS(null, {file: './styles.css'})
       chrome.tabs.executeScript(null, {file: './foreground.js'}, ()=> console.log('foreground injected'))
-
     }
+    chrome.tabs.sendMessage(current_tab_id, 'append-child', () => console.log('sending message to append from background'));
     })
