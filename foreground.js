@@ -37,21 +37,34 @@ divBox2.appendChild(satPriceBtn);
 divBox1.appendChild(exit);
 
 
+
+// input.addEventListener('click', () => {
+//   console.log(input.value)
+//   handler()
+//   console.log(input.value)
+// })
+
+document.getElementById('first').addEventListener('click', handler)
 //send input to backend
 //have backend fetch sat price adn convert to usd
 //send back in repsonse
-document.getElementById('first').addEventListener('click', () => {
+function handler(){
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "http://localhost:3000/api/data", true);
   xhr.setRequestHeader("Content-Type", "application/json");;
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4) {
     // JSON.parse does not evaluate the attacker's scripts.
-    resp = JSON.parse(xhr.responseText);
-    console.log('getting data from button', resp)
-    let satToBitcoin = Number(resp.currentPrice)
-    const valInput = document.getElementById('input').value;
+    const resp = JSON.parse(xhr.responseText);
+    const satToBitcoin = Number(resp.currentPrice);
+    let valInput = document.getElementById('input').value;
+    if(valInput.toString()[0] === '$') {
+      valInput = parseFloat(valInput.toString().replace(/\$|,/g, ''))
+      valInput = Number(valInput);
+    }
+
     const calc = valInput/ (satToBitcoin / 100000000)
+
     displayValue = `${calc.toFixed(2)} sats`
 
    document.getElementById('input').value = displayValue;
@@ -59,7 +72,7 @@ document.getElementById('first').addEventListener('click', () => {
   }
 }
     xhr.send(null);
-})
+}
 
 
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
@@ -111,12 +124,10 @@ function dragElement(elmnt) {
   }
 }
 
-// let highlightTimer = setInterval(gText, 500);
 // //getting highlighted input into input field
-
 function gText(e) {
   displayValue = (document.all) ? document.selection.createRange().text : document.getSelection();
-  document.getElementById('input').value = displayValue;
+  document.getElementById('input').value = displayValue 
 }
 
 document.onmouseup = gText;

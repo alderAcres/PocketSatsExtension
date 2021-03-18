@@ -15,7 +15,6 @@ let enabled = false;
 
 myBtn.onclick = () => {
     chrome.extension.sendMessage({ message: "turnOnExt"});
-    myBtn.textContent = 'Enable';
   
     enabled = !enabled;
     myBtn.value = enabled ? 'Disable' : 'Enable';
