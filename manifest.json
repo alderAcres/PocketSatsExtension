@@ -1,0 +1,29 @@
+{
+  "name": "PocketSats",
+  "description": "Allowing user to convert USD to SATS",
+  "version": "0.1.0",
+  "manifest_version": 2,
+  "icons": {
+    "16": "./icons/btc16.png",
+    "32": "./icons/btc32.png",
+    "48": "./icons/btc48.png",
+    "128": "./icons/btc128.png"
+  },
+  "background": {
+    "scripts": ["./background.js", "./popup.js"]
+  },
+  "options_page": "./options.html",
+  "browser_action": {
+    "default_icon": "./icons/btc.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "webRequest",
+    "http://localhost:3000/api/data",
+    "http://*/",
+    "tabs",
+    "activeTab",
+    "<all_urls>",
+    "storage"
+  ]
+}
