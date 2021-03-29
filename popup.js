@@ -1,25 +1,35 @@
 let body = document.querySelector('body')
 
 let myBtn = document.createElement('button')
+
 body.appendChild(myBtn)
 myBtn.id = 'myBtn';
 myBtn.style.height = '3rem';
 myBtn.style.width = '6rem';
-myBtn.textContent = 'Enable';
-myBtn.value = 'Disable';
-
-body.style.height = '200px';
-body.style.width = '200px';
-
+myBtn.type = 'button';
+myBtn.innerText = 'Enable';
 let enabled = false;
 
-myBtn.onclick = () => {
+const checkEnabledStatus = () => {
+if(enabled) myBtn.innerHTML = 'Disable';
+else myBtn.innerHTML = 'Enable';
+}
+
+setInterval(checkEnabledStatus, 200);
+myBtn.addEventListener('click', () => {
+  if(myBtn.innerText == 'Enable'){
     chrome.extension.sendMessage({ message: "turnOnExt"});
-  
-    enabled = !enabled;
-    myBtn.value = enabled ? 'Disable' : 'Enable';
-    window.close();
-};
+    enabled = true;
+    console.log('enable from popup')
+    window.close()
+  }
+  else if(myBtn.innerText == 'Disable'){
+    chrome.extension.sendMessage({ message: "turnOffExt"});
+    enabled = false;
+    console.log('Disable from popup')
+    window.close()
+  }
+});
 
 //if we get an enable button click..
 //send message to enable to background js

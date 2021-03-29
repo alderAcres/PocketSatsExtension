@@ -1,4 +1,5 @@
 let displayValue;
+let extState = true;
 
 const satPriceBtn = document.createElement('button')
 satPriceBtn.innerText = 'PRICE IN SATS'
@@ -76,9 +77,20 @@ function handler(){
 
 
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
-
+  console.log(req)
+if(req === 'append-child' && !extState){
+  extState = true;
   document.querySelector('body').appendChild(container);
+  console.log('appending')
+}
+else if(req === 'unappend-child' && extState){
+  extState = false;
+  document.querySelector('body').removeChild(container);
+  console.log('unappending')
+}
 })
+
+
 //dragging container functionality/ movement within window
 dragElement(document.getElementById("container"));
 
@@ -138,22 +150,21 @@ if (!document.all) document.captureEvents(Event.MOUSEUP);
 //listener events for keydown functionality
 document.addEventListener('keydown', function (event) {
   // CTRL + S combo to START
-  if (event.ctrlKey && event.key === 's') {
+  if (event.ctrlKey && event.key === 's' && !extState) {
+    extState = true;
     document.querySelector('body').appendChild(container);
     chrome.extension.sendMessage({ message: "turnOnExt"});
   }
   // CTRL + E combo to EXIT
-  if (event.ctrlKey && event.key === 'e') {
+  if (event.ctrlKey && event.key === 'e' && extState) {
+    extState = false;
     document.querySelector('body').removeChild(container);
     chrome.extension.sendMessage({ message: "turnOffExt"});
   }
 });
 
-exit.addEventListener('click', () => {
-  document.querySelector('body').removeChild(container);
-})
-
-
 exit.onclick = () => {
+  extState = false;
+  document.querySelector('body').removeChild(container);
   chrome.extension.sendMessage({ message: "turnOffExt"});
 };
