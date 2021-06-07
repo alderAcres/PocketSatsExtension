@@ -38,46 +38,39 @@ divBox2.appendChild(satPriceBtn);
 divBox1.appendChild(exit);
 
 
-
-// input.addEventListener('click', () => {
-//   console.log(input.value)
-//   handler()
-//   console.log(input.value)
-// })
-
 document.getElementById('first').addEventListener('click', handler)
 //send input to backend
 //have backend fetch sat price adn convert to usd
 //send back in repsonse
 function handler(){
   let xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://localhost:3000/api/data", true);
-  xhr.setRequestHeader("Content-Type", "application/json");;
+  const KEY = '008150ff-e99d-4cb4-93c0-27b6b7d4d02f';
+  xhr.open("GET", "https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest", true);
+  xhr.setRequestHeader('X-CMC_PRO_API_KEY', KEY);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4) {
     // JSON.parse does not evaluate the attacker's scripts.
     const resp = JSON.parse(xhr.responseText);
-    const satToBitcoin = Number(resp.currentPrice);
+    console.log('DEBUG :: resp', resp.data[0].quote.USD.price)
+    const satToBitcoin = Number(resp.data[0].quote.USD.price);
     let valInput = document.getElementById('input').value;
     if(valInput.toString()[0] === '$') {
       valInput = parseFloat(valInput.toString().replace(/\$|,/g, ''))
       valInput = Number(valInput);
     }
-
     const calc = valInput/ (satToBitcoin / 100000000)
 
     displayValue = `${calc.toFixed(2)} sats`
 
    document.getElementById('input').value = displayValue;
    //take price of input --> divide by price of bitcoin/100,000,000 
-  }
+  } 
 }
     xhr.send(null);
 }
 
 
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
-  console.log(req)
 if(req === 'append-child' && !extState){
   extState = true;
   document.querySelector('body').appendChild(container);

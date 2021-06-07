@@ -12,14 +12,15 @@
   "background": {
     "scripts": ["./background.js", "./popup.js"]
   },
-  "options_page": "./options.html",
   "browser_action": {
     "default_icon": "./icons/btc.png",
     "default_popup": "popup.html"
   },
   "permissions": [
     "webRequest",
-    "http://localhost:3000/api/data",
+    "http://api.coindesk.com/v1/bpi/",
+    "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
+    "https://pro-api.coinmarketcap.com/*",
     "http://*/",
     "tabs",
     "activeTab",
