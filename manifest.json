@@ -1,30 +1,25 @@
 {
   "name": "PocketSats",
-  "description": "Allowing user to convert USD to SATS",
-  "version": "0.1.0",
+  "description": "A Chrome Extension that allows users to convert the price in USD to Satoshis (the smlalest unit of Bitcoin).",
+  "version": "1.1.2",
   "manifest_version": 2,
   "icons": {
-    "16": "./icons/btc16.png",
-    "32": "./icons/btc32.png",
-    "48": "./icons/btc48.png",
-    "128": "./icons/btc128.png"
+    "16": "./icons/pocket-sats-logo.png",
+    "32": "./icons/pocket-sats-logo.png",
+    "48": "./icons/pocket-sats-logo.png",
+    "128": "./icons/pocket-sats-logo.png"
   },
   "background": {
     "scripts": ["./background.js", "./popup.js"]
   },
   "browser_action": {
-    "default_icon": "./icons/btc.png",
+    "default_icon": "./icons/pocket-sats-logo.png",
     "default_popup": "popup.html"
   },
   "permissions": [
-    "webRequest",
-    "http://api.coindesk.com/v1/bpi/",
-    "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
-    "https://pro-api.coinmarketcap.com/*",
-    "http://*/",
     "tabs",
-    "activeTab",
-    "<all_urls>",
-    "storage"
+    "http://*/",
+    "https://*/",
+    "activeTab"
   ]
 }

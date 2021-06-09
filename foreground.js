@@ -28,46 +28,81 @@ exit.textContent = 'X';
 
 const body = document.querySelector('body');
 
+const instructions = document.createElement('div')
+const instructionsP = document.createElement('p')
+instructionsP.innerText = 'Highlight price with cursor to begin.'
+instructions.id = 'instructions'
+instructionsP.id = 'instructionsP'
+
 body.appendChild(container);
 container.appendChild(divBox1);
 container.appendChild(divBox2);
+instructions.appendChild(instructionsP)
+container.appendChild(instructions)
 
 divBox1.appendChild(header);
+divBox1.appendChild(exit);
 divBox2.appendChild(input);
 divBox2.appendChild(satPriceBtn);
-divBox1.appendChild(exit);
-
 
 document.getElementById('first').addEventListener('click', handler)
-//send input to backend
-//have backend fetch sat price adn convert to usd
-//send back in repsonse
+
 function handler(){
-  let xhr = new XMLHttpRequest();
+  // let xhr = new XMLHttpRequest();
   const KEY = '008150ff-e99d-4cb4-93c0-27b6b7d4d02f';
-  xhr.open("GET", "https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest", true);
-  xhr.setRequestHeader('X-CMC_PRO_API_KEY', KEY);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4) {
-    // JSON.parse does not evaluate the attacker's scripts.
-    const resp = JSON.parse(xhr.responseText);
-    console.log('DEBUG :: resp', resp.data[0].quote.USD.price)
-    const satToBitcoin = Number(resp.data[0].quote.USD.price);
-    let valInput = document.getElementById('input').value;
-    if(valInput.toString()[0] === '$') {
-      valInput = parseFloat(valInput.toString().replace(/\$|,/g, ''))
-      valInput = Number(valInput);
-    }
-    const calc = valInput/ (satToBitcoin / 100000000)
+     fetch("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest", {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc. 
+      mode: 'no-cors',
+      headers: {
+        'X-CMC_PRO_API_KEY': KEY,
+      },
+     })
+    .then(response => {
+      response.json()
+    })
+    .then(resp => {
+      console.log('resp', resp)
+      console.log('DEBUG :: resp', resp.data[0].quote.USD.price)
+      const satToBitcoin = Number(resp.data[0].quote.USD.price);
+      let valInput = document.getElementById('input').value;
+      if(valInput.toString()[0] === '$') {
+        valInput = parseFloat(valInput.toString().replace(/\$|,/g, ''))
+        valInput = Number(valInput);
+      }
+      const calc = valInput/ (satToBitcoin / 100000000)
 
-    displayValue = `${calc.toFixed(2)} sats`
+      displayValue = `${calc.toFixed(2)} sats`
 
-   document.getElementById('input').value = displayValue;
-   //take price of input --> divide by price of bitcoin/100,000,000 
-  } 
+      document.getElementById('input').value = displayValue;
+    })
+    .catch(err => {
+      console.log('ERROR', err)
+    })
+  
 }
-    xhr.send(null);
-}
+//   xhr.open("GET", "https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest");
+//   xhr.setRequestHeader('X-CMC_PRO_API_KEY', KEY);
+//   xhr.onreadystatechange = function() {
+//     if (xhr.readyState) {
+//     // JSON.parse does not evaluate the attacker's scripts.
+//     const resp = JSON.parse(xhr.responseText);
+//     console.log('DEBUG :: resp', resp.data[0].quote.USD.price)
+//     const satToBitcoin = Number(resp.data[0].quote.USD.price);
+//     let valInput = document.getElementById('input').value;
+//     if(valInput.toString()[0] === '$') {
+//       valInput = parseFloat(valInput.toString().replace(/\$|,/g, ''))
+//       valInput = Number(valInput);
+//     }
+//     const calc = valInput/ (satToBitcoin / 100000000)
+
+//     displayValue = `${calc.toFixed(2)} sats`
+
+//    document.getElementById('input').value = displayValue;
+//    //take price of input --> divide by price of bitcoin/100,000,000 
+//   } 
+// }
+//     xhr.send(null);
+
 
 
 chrome.runtime.onMessage.addListener((req, sender, sendRes) => {
@@ -137,8 +172,6 @@ function gText(e) {
 
 document.onmouseup = gText;
 if (!document.all) document.captureEvents(Event.MOUSEUP);
-
-
 
 //listener events for keydown functionality
 document.addEventListener('keydown', function (event) {

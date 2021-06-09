@@ -1,10 +1,10 @@
 #container-popup {
-  color: white;
+  color: #f3f3f3;
 }
 
 #myBtn {
 background-color: #f2a900;
-border-radius: 4px;
+border-radius: 2px;
 border: none;
 height: 5vh;
 width: auto;
@@ -17,7 +17,7 @@ display: inline-block;
 body {
   height: 15rem;
   width: 15rem;
-  background-color: #272727;
+  background-color: #283747;
   display: flex;
   flex-direction: column;
   justify-content: center;
